@@ -1,0 +1,30 @@
+version: "1"
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:5000"
+    volumes:
+      - mongodb_data_container:/data/db
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+     - "5672:6000"
+  app: 
+    build: .
+    depends_on:
+      - mongo
+      - rabbitmq
+    ports:
+      - "8000:8080"
+
+# networks:
+#   mongo_network:
+#     driver: bridge
+#   rabbitmq_network:
+#     driver: bridge
+    
+volumes:
+  mongodb_data_container:
+
